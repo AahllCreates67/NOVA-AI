@@ -170,8 +170,7 @@ class ToolService {
 
     if (tool.jsonMode) {
       try {
-        const cleaned = result.text.replace(/```json
-?|```/g, '').trim();
+        const cleaned = String(result.text || '').replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim();
         const parsed = JSON.parse(cleaned);
         return {
           tool: toolName,

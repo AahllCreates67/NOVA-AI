@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NOVA AI — Intelligence Beyond Imagination. Futuristic AI Chat, Productivity Tools, Image Studio, and Study Room." />
+  <title>NOVA AI — Intelligence Beyond Imagination</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/nova-logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/animations.css" />
+  <link rel="stylesheet" href="/css/responsive.css" />
+</head>
+<body>
+  <!-- NAVIGATION BAR -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="#/" class="brand-logo" data-route="/" aria-label="NOVA AI Home">
+        <img src="/assets/icons/nova-logo.svg" alt="" width="34" height="34" />
+        <span>NOVA <span class="gradient-text">AI</span></span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary Navigation">
+        <a href="#/" class="nav-link active" data-route="/">Home</a>
+        <a href="#/chat" class="nav-link" data-route="/chat">AI Chat</a>
+        <a href="#/discover" class="nav-link" data-route="/discover">Discover</a>
+        <a href="#/image-studio" class="nav-link" data-route="/image-studio">Image Studio</a>
+        <a href="#/study-room" class="nav-link" data-route="/study-room">Study Room</a>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="nav-desktop-auth" id="navAuthArea">
+          <button type="button" class="btn btn-ghost" data-route="/workspace">Workspace</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="navSignInBtn">Sign In</button>
+          <button type="button" class="btn btn-primary btn-sm" data-route="/chat">Get Started</button>
+        </div>
+        <button type="button" class="mobile-menu-btn" id="mobileMenuToggle" aria-label="Toggle Menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE DRAWER -->
+  <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-hidden="true">
+    <a href="#/" class="nav-link" data-route="/">Home</a>
+    <a href="#/chat" class="nav-link" data-route="/chat">AI Chat</a>
+    <a href="#/discover" class="nav-link" data-route="/discover">Discover Tools</a>
+    <a href="#/image-studio" class="nav-link" data-route="/image-studio">Image Studio</a>
+    <a href="#/study-room" class="nav-link" data-route="/study-room">Study Room</a>
+    <a href="#/workspace" class="nav-link" data-route="/workspace">My Workspace</a>
+    <a href="#/settings" class="nav-link" data-route="/settings">Settings</a>
+    <div style="margin-top: 12px; display: flex; gap: 10px;" id="mobileAuthArea">
+      <button type="button" class="btn btn-secondary" style="flex:1" id="mobileSignInBtn">Sign In</button>
+      <button type="button" class="btn btn-primary" style="flex:1" data-route="/chat">Launch NOVA</button>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       VIEW 1: HOMEPAGE
+       ====================================================================== -->
+  <main id="view-home" class="app-view active">
+    <!-- SECTION 2: HERO — THE NOVA AWAKENING -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-badge reveal-up">✦ INTRODUCING NOVA AI</div>
+        <h1 class="hero-title reveal-up">Meet the intelligence <span class="gradient-text">beyond imagination.</span></h1>
+        <p class="hero-subtitle reveal-up">A new space for thinking, creating and exploring what's possible.</p>
+
+        <!-- COSMIC 3D NOVA ORB -->
+        <div class="orb-stage orb-floating" id="novaOrbStage" role="button" tabindex="0" aria-label="Interactive NOVA Cosmic Intelligence Orb">
+          <div class="orb-ambient-halo"></div>
+          <canvas id="novaOrbCanvas" width="330" height="330"></canvas>
+        </div>
+
+        <!-- FLOATING GLASS PROMPT COMPOSER -->
+        <div class="hero-prompt-wrapper reveal-up">
+          <form id="heroPromptForm" class="prompt-box">
+            <label for="heroPromptInput" class="sr-only">Ask NOVA anything</label>
+            <textarea
+              id="heroPromptInput"
+              class="prompt-textarea"
+              rows="2"
+              placeholder="Ask NOVA anything..."
+              required
+            ></textarea>
+            <div class="prompt-toolbar">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <label class="btn btn-ghost btn-sm" title="Attach text file">
+                  <input type="file" id="heroFileAttach" accept=".txt,.md,.json,.csv,.js,.py" hidden />
+                  <span>+ Attach Context</span>
+                </label>
+                <span class="prompt-hint" id="heroAttachLabel">Enter to send · Shift+Enter for new line</span>
+              </div>
+              <button type="submit" class="btn btn-primary" id="heroPromptSubmit" disabled>
+                <span>Ask NOVA</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: QUICK AI ACCESS -->
+    <section class="section-block">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Instant Launchpad</span>
+          <h2 class="section-title">Jump directly into action</h2>
+          <p class="section-desc">Select a specialized workflow to launch NOVA AI with the right tools ready.</p>
+        </div>
+
+        <div class="quick-grid">
+          <button type="button" class="glass-card interactive quick-card" data-quick-action="chat">
+            <div class="quick-icon">💬</div>
+            <div>
+              <h3>Start a Conversation</h3>
+              <p style="color:var(--text-secondary); font-size:0.9rem; margin-top:4px;">Open the full streaming AI chat workspace.</p>
+            </div>
+          </button>
+
+          <button type="button" class="glass-card interactive quick-card" data-quick-action="tool:writer">
+            <div class="quick-icon">✍️</div>
+            <div>
+              <h3>Write Something</h3>
+              <p style="color:var(--text-secondary); font-size:0.9rem; margin-top:4px;">Draft articles, essays, scripts, and polished copy.</p>
+            </div>
+          </button>
+
+          <button type="button" class="glass-card interactive quick-card" data-quick-action="tool:explainer">
+            <div class="quick-icon">🧠</div>
+            <div>
+              <h3>Explain a Topic</h3>
+              <p style="color:var(--text-secondary); font-size:0.9rem; margin-top:4px;">Break down complex ideas into clear mental models.</p>
+            </div>
+          </button>
+
+          <button type="button" class="glass-card interactive quick-card" data-quick-action="tool:summarizer">
+            <div class="quick-icon">📑</div>
+            <div>
+              <h3>Summarize Text</h3>
+              <p style="color:var(--text-secondary); font-size:0.9rem; margin-top:4px;">Extract core insights from long documents instantly.</p>
+            </div>
+          </button>
+
+          <button type="button" class="glass-card interactive quick-card" data-quick-action="image">
+            <div class="quick-icon">🎨</div>
+            <div>
+              <h3>Generate an Image</h3>
+              <p style="color:var(--text-secondary); font-size:0.9rem; margin-top:4px;">Create visuals in NOVA Image Studio.</p>
+            </div>
+          </button>
+
+          <button type="button" class="glass-card interactive quick-card" data-quick-action="tool:brainstorm">
+            <div class="quick-icon">✦</div>
+            <div>
+              <h3>Create Ideas</h3>
+              <p style="color:var(--text-secondary); font-size:0.9rem; margin-top:4px;">Brainstorm concepts, names, and product strategies.</p>
+            </div>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: DISCOVER NOVA -->
+    <section class="section-block" style="background: rgba(16, 22, 42, 0.32);">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">The Ecosystem</span>
+          <h2 class="section-title">Explore a new way to create.</h2>
+          <p class="section-desc">Five cohesive environments engineered for deep focus, creativity, and structured learning.</p>
+        </div>
+
+        <div class="discover-bento">
+          <div class="glass-card interactive bento-card bento-span-7">
+            <div>
+              <span class="section-eyebrow">01 · Core Intelligence</span>
+              <h3 style="font-size:1.5rem; margin-bottom:8px;">AI Chat Workspace</h3>
+              <p style="color:var(--text-secondary);">Real-time streaming dialogue with conversation memory, Markdown & code syntax formatting, regeneration controls, and cloud sync.</p>
+            </div>
+            <div style="margin-top:20px;">
+              <button type="button" class="btn btn-secondary btn-sm" data-route="/chat">Open AI Chat →</button>
+            </div>
+          </div>
+
+          <div class="glass-card interactive bento-card bento-span-5">
+            <div>
+              <span class="section-eyebrow">02 · Precision Suite</span>
+              <h3 style="font-size:1.5rem; margin-bottom:8px;">AI Tools</h3>
+              <p style="color:var(--text-secondary);">Eight purpose-built assistants for writing, summarizing, translating, coding, emails, and storytelling.</p>
+            </div>
+            <div style="margin-top:20px;">
+              <button type="button" class="btn btn-secondary btn-sm" data-route="/discover">Explore Tools →</button>
+            </div>
+          </div>
+
+          <div class="glass-card interactive bento-card bento-span-4">
+            <div>
+              <span class="section-eyebrow">03 · Visual Synthesis</span>
+              <h3 style="font-size:1.35rem; margin-bottom:8px;">Image Studio</h3>
+              <p style="color:var(--text-secondary);">Transform prompts into cinematic visuals with style presets, prompt enhancement, and aspect ratio controls.</p>
+            </div>
+            <div style="margin-top:20px;">
+              <button type="button" class="btn btn-secondary btn-sm" data-route="/image-studio">Enter Studio →</button>
+            </div>
+          </div>
+
+          <div class="glass-card interactive bento-card bento-span-4">
+            <div>
+              <span class="section-eyebrow">04 · Active Learning</span>
+              <h3 style="font-size:1.35rem; margin-bottom:8px;">Study Room</h3>
+              <p style="color:var(--text-secondary);">Generate revision notes, interactive flashcards, scored quizzes, and manage your study schedule.</p>
+            </div>
+            <div style="margin-top:20px;">
+              <button type="button" class="btn btn-secondary btn-sm" data-route="/study-room">Start Studying →</button>
+            </div>
+          </div>
+
+          <div class="glass-card interactive bento-card bento-span-4">
+            <div>
+              <span class="section-eyebrow">05 · Personal Vault</span>
+              <h3 style="font-size:1.35rem; margin-bottom:8px;">My Workspace</h3>
+              <p style="color:var(--text-secondary);">Organize saved conversations, generated outputs, study notes, and favorite tools in one unified library.</p>
+            </div>
+            <div style="margin-top:20px;">
+              <button type="button" class="btn btn-secondary btn-sm" data-route="/workspace">View Workspace →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: AI CAPABILITIES -->
+    <section class="section-block">
+      <div class="container capabilities-layout">
+        <div>
+          <span class="section-eyebrow">Core Capabilities</span>
+          <h2 class="section-title">Designed to amplify human thinking.</h2>
+          <p class="section-desc" style="margin-bottom:24px;">Whether you are untangling a technical problem, drafting a creative story, or preparing for exams, NOVA adapts to your workflow.</p>
+          <button type="button" class="btn btn-primary" data-route="/discover">Browse All Capabilities</button>
+        </div>
+
+        <div class="capability-list">
+          <div class="glass-card capability-item">
+            <div>
+              <h3>Understand</h3>
+              <p style="color:var(--text-secondary); font-size:0.92rem;">Digest dense articles, debug unfamiliar code, and translate across languages effortlessly.</p>
+            </div>
+            <span style="color:var(--accent-cyan); font-weight:700;">01</span>
+          </div>
+          <div class="glass-card capability-item">
+            <div>
+              <h3>Create</h3>
+              <p style="color:var(--text-secondary); font-size:0.92rem;">Draft original prose, emails, stories, and visual concepts from a single spark.</p>
+            </div>
+            <span style="color:var(--accent-violet); font-weight:700;">02</span>
+          </div>
+          <div class="glass-card capability-item">
+            <div>
+              <h3>Explore</h3>
+              <p style="color:var(--text-secondary); font-size:0.92rem;">Brainstorm multidimensional angles and uncover connections across disciplines.</p>
+            </div>
+            <span style="color:var(--accent-cyan); font-weight:700;">03</span>
+          </div>
+          <div class="glass-card capability-item">
+            <div>
+              <h3>Learn</h3>
+              <p style="color:var(--text-secondary); font-size:0.92rem;">Turn any subject into structured study guides, flashcards, and self-graded quizzes.</p>
+            </div>
+            <span style="color:var(--accent-violet); font-weight:700;">04</span>
+          </div>
+          <div class="glass-card capability-item">
+            <div>
+              <h3>Organize</h3>
+              <p style="color:var(--text-secondary); font-size:0.92rem;">Keep your best insights, tasks, and generated assets saved and searchable.</p>
+            </div>
+            <span style="color:var(--accent-cyan); font-weight:700;">05</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: HOW NOVA WORKS -->
+    <section class="section-block" style="background: rgba(16, 22, 42, 0.32);">
+      <div class="container">
+        <div class="section-header" style="text-align:center;">
+          <span class="section-eyebrow">Simple Workflow</span>
+          <h2 class="section-title">How NOVA Works</h2>
+        </div>
+
+        <div class="steps-grid">
+          <div class="glass-card step-card">
+            <div class="step-number">01</div>
+            <h3>Ask NOVA</h3>
+            <p style="color:var(--text-secondary); margin-top:8px;">Type a question, paste text, attach context, or choose a specialized AI tool.</p>
+          </div>
+          <div class="glass-card step-card">
+            <div class="step-number">02</div>
+            <h3>Explore the response</h3>
+            <p style="color:var(--text-secondary); margin-top:8px;">Receive real-time AI output, refine follow-ups, regenerate variations, or test your knowledge.</p>
+          </div>
+          <div class="glass-card step-card">
+            <div class="step-number">03</div>
+            <h3>Save, create or continue</h3>
+            <p style="color:var(--text-secondary); margin-top:8px;">Copy results, download generated visuals, or archive your work in My Workspace.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: CALL TO ACTION -->
+    <section class="section-block">
+      <div class="container">
+        <div class="cta-banner">
+          <h2 class="section-title">Your next idea starts here.</h2>
+          <p class="section-desc" style="margin: 0 auto 28px;">Step into a smarter space for creativity, learning and exploration.</p>
+          <button type="button" class="btn btn-primary btn-lg" data-route="/chat">Explore NOVA AI</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: FOOTER -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <a href="#/" class="brand-logo" data-route="/">
+              <img src="/assets/icons/nova-logo.svg" alt="" width="30" height="30" />
+              <span>NOVA AI</span>
+            </a>
+            <p style="color:var(--accent-cyan); font-size:0.8rem; letter-spacing:0.12em; margin-top:10px; font-weight:600;">INTELLIGENCE BEYOND IMAGINATION</p>
+            <p style="color:var(--text-secondary); font-size:0.9rem; margin-top:12px; max-width:320px;">
+              A unified artificial intelligence platform for conversation, creation, visual synthesis, and structured study.
+            </p>
+          </div>
+
+          <div>
+            <h4>Navigation</h4>
+            <ul class="footer-links">
+              <li><a href="#/" data-route="/">Home</a></li>
+              <li><a href="#/chat" data-route="/chat">AI Chat</a></li>
+              <li><a href="#/discover" data-route="/discover">Discover Tools</a></li>
+              <li><a href="#/image-studio" data-route="/image-studio">Image Studio</a></li>
+              <li><a href="#/study-room" data-route="/study-room">Study Room</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Workspace</h4>
+            <ul class="footer-links">
+              <li><a href="#/workspace" data-route="/workspace">My Workspace</a></li>
+              <li><a href="#/profile" data-route="/profile">Profile</a></li>
+              <li><a href="#/settings" data-route="/settings">Settings</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Information</h4>
+            <ul class="footer-links">
+              <li><button type="button" data-info-modal="about">About NOVA AI</button></li>
+              <li><button type="button" data-info-modal="privacy">Privacy Policy</button></li>
+              <li><button type="button" data-info-modal="terms">Terms of Service</button></li>
+              <li><button type="button" data-info-modal="contact">Contact</button></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <div>© <span id="footerYear">2026</span> Aahil Shams. All Rights Reserved.</div>
+          <div>Designed &amp; Developed by Aahil Shams</div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- ======================================================================
+       VIEW 2: AI CHAT WORKSPACE
+       ====================================================================== -->
+  <section id="view-chat" class="app-view">
+    <div class="chat-layout">
+      <aside class="chat-sidebar" id="chatSidebar">
+        <button type="button" class="btn btn-primary" id="newChatBtn" style="width:100%;">+ New Chat</button>
+        <input type="search" id="chatSearchInput" class="input-field" placeholder="Search conversations..." aria-label="Search conversations" />
+        <div class="chat-history-list" id="chatHistoryList"></div>
+        <div style="border-top:1px solid var(--border-subtle); padding-top:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span id="chatPersistenceBadge" style="font-size:0.76rem; color:var(--text-muted);">Local Session</span>
+          <button type="button" class="btn btn-ghost btn-sm" data-route="/settings">Settings</button>
+        </div>
+      </aside>
+
+      <div class="chat-main">
+        <div class="chat-topbar">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <button type="button" class="btn btn-secondary btn-sm mobile-menu-btn" id="toggleChatSidebarBtn" aria-label="Toggle Conversations">☰</button>
+            <h2 id="activeChatTitle" style="font-size:1.05rem;">New Conversation</h2>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span id="aiModelIndicator" style="font-size:0.78rem; color:var(--accent-cyan);"></span>
+            <button type="button" class="btn btn-ghost btn-sm" id="saveChatToWorkspaceBtn" title="Save conversation to Workspace">Save</button>
+            <button type="button" class="btn btn-ghost btn-sm" id="clearChatBtn" title="Clear messages">Clear</button>
+          </div>
+        </div>
+
+        <div id="chatSetupNotice"></div>
+
+        <div class="chat-messages" id="chatMessagesContainer">
+          <div class="empty-state" id="chatEmptyState" style="margin:auto; max-width:520px;">
+            <h3 style="margin-bottom:8px;">Welcome to NOVA AI Chat</h3>
+            <p style="margin-bottom:18px;">Ask a question, brainstorm ideas, write code, or explore complex topics.</p>
+            <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center;">
+              <button type="button" class="btn btn-secondary btn-sm" data-sample-prompt="Explain quantum computing using an everyday analogy.">Explain quantum computing</button>
+              <button type="button" class="btn btn-secondary btn-sm" data-sample-prompt="Write a clean JavaScript debounce function with explanation.">JS debounce helper</button>
+              <button type="button" class="btn btn-secondary btn-sm" data-sample-prompt="Give me 5 creative sci-fi world-building concepts.">Sci-fi world ideas</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-composer-area">
+          <form id="chatForm" class="chat-composer-inner prompt-box">
+            <label for="chatInput" class="sr-only">Message NOVA AI</label>
+            <textarea id="chatInput" class="prompt-textarea" rows="2" placeholder="Message NOVA AI..."></textarea>
+            <div class="prompt-toolbar">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <label class="btn btn-ghost btn-sm">
+                  <input type="file" id="chatFileAttach" accept=".txt,.md,.json,.csv,.js,.py,.html,.css" hidden />
+                  <span>+ Attach File</span>
+                </label>
+                <span class="prompt-hint" id="chatStatusText">Ready</span>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <button type="button" class="btn btn-danger btn-sm" id="stopGenerationBtn" style="display:none;">Stop</button>
+                <button type="submit" class="btn btn-primary btn-sm" id="sendChatBtn" disabled>Send</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       VIEW 3: DISCOVER TOOLS
+       ====================================================================== -->
+  <section id="view-discover" class="app-view">
+    <div class="container page-shell">
+      <div class="section-header">
+        <span class="section-eyebrow">NOVA Tool Suite</span>
+        <h1 class="section-title">Discover AI Tools</h1>
+        <p class="section-desc">Purpose-built AI utilities engineered for writing, analysis, coding, translation, and ideation.</p>
+      </div>
+
+      <div class="tools-controls">
+        <div class="search-input-wrap">
+          <input type="search" id="toolSearchInput" class="input-field" placeholder="Search tools by name or capability..." aria-label="Search tools" />
+        </div>
+        <div class="filter-pills" id="toolCategoryPills">
+          <button type="button" class="filter-pill active" data-category="all">All Tools</button>
+          <button type="button" class="filter-pill" data-category="writing">Writing</button>
+          <button type="button" class="filter-pill" data-category="productivity">Productivity</button>
+          <button type="button" class="filter-pill" data-category="learning">Learning &amp; Code</button>
+          <button type="button" class="filter-pill" data-category="creative">Creative</button>
+        </div>
+      </div>
+
+      <div id="recentToolsSection" style="display:none; margin-bottom:28px;">
+        <h3 style="font-size:1rem; color:var(--text-secondary); margin-bottom:12px;">Recently Used</h3>
+        <div id="recentToolsList" style="display:flex; flex-wrap:wrap; gap:10px;"></div>
+      </div>
+
+      <div class="tools-grid" id="toolsGrid"></div>
+      <div class="empty-state" id="toolsEmptyState" style="display:none; margin-top:24px;">
+        <h3>No matching tools found</h3>
+        <p>Try clearing your search query or switching categories.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       VIEW 4: NOVA IMAGE STUDIO
+       ====================================================================== -->
+  <section id="view-image-studio" class="app-view">
+    <div class="container page-shell">
+      <div class="section-header">
+        <span class="section-eyebrow">Visual Synthesis</span>
+        <h1 class="section-title">NOVA Image Studio</h1>
+        <p class="section-desc">Create original imagery from text descriptions with style presets and aspect ratio controls.</p>
+      </div>
+
+      <div id="imageProviderNotice"></div>
+
+      <div class="studio-grid">
+        <form id="imageStudioForm" class="glass-card studio-panel">
+          <div class="form-group">
+            <label for="imagePromptInput" class="form-label">Image Prompt</label>
+            <textarea id="imagePromptInput" class="textarea-field" rows="4" placeholder="Describe the scene, lighting, subject, and atmosphere..." required></textarea>
+          </div>
+
+          <label style="display:flex; align-items:center; gap:10px; font-size:0.9rem; cursor:pointer;">
+            <input type="checkbox" id="imageEnhanceCheck" checked />
+            <span>Enhance prompt with NOVA Visual Director</span>
+          </label>
+
+          <div class="form-group">
+            <label for="imageStyleSelect" class="form-label">Visual Style</label>
+            <select id="imageStyleSelect" class="select-field">
+              <option value="cinematic">Cinematic</option>
+              <option value="digital-art">Digital Art</option>
+              <option value="3d-render">3D Render</option>
+              <option value="illustration">Illustration</option>
+              <option value="minimal">Minimal</option>
+              <option value="fantasy">Fantasy</option>
+              <option value="photorealistic">Photorealistic</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <span class="form-label">Aspect Ratio</span>
+            <div class="aspect-pills" id="aspectRatioPills">
+              <button type="button" class="aspect-btn active" data-ratio="1:1">1:1 Square</button>
+              <button type="button" class="aspect-btn" data-ratio="3:4">3:4 Portrait</button>
+              <button type="button" class="aspect-btn" data-ratio="16:9">16:9 Wide</button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="generateImageBtn" style="width:100%;">Generate Image</button>
+          <div id="imageGenerationStatus" style="font-size:0.86rem; color:var(--text-secondary); text-align:center;"></div>
+        </form>
+
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <h3>Generated Creations</h3>
+            <button type="button" class="btn btn-ghost btn-sm" id="clearImagesBtn">Clear Session Gallery</button>
+          </div>
+          <div class="image-gallery" id="imageGallery"></div>
+          <div class="empty-state" id="imageEmptyState">
+            <h3>No images generated yet</h3>
+            <p>Enter a prompt on the left to create your first visual in NOVA Image Studio.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       VIEW 5: NOVA STUDY ROOM
+       ====================================================================== -->
+  <section id="view-study-room" class="app-view">
+    <div class="container page-shell">
+      <div class="section-header">
+        <span class="section-eyebrow">Focused Learning Environment</span>
+        <h1 class="section-title">NOVA Study Room</h1>
+        <p class="section-desc">Master new subjects with structured explanations, revision notes, interactive flashcards, self-scored quizzes, and a study planner.</p>
+      </div>
+
+      <div class="study-tabs" id="studyTabs">
+        <button type="button" class="filter-pill active" data-study-tab="explainer">Topic Explainer</button>
+        <button type="button" class="filter-pill" data-study-tab="notes">Revision Notes</button>
+        <button type="button" class="filter-pill" data-study-tab="quiz">Quiz Creator</button>
+        <button type="button" class="filter-pill" data-study-tab="flashcards">Flashcards</button>
+        <button type="button" class="filter-pill" data-study-tab="planner">Study Planner</button>
+      </div>
+
+      <!-- TAB 1: TOPIC EXPLAINER -->
+      <div class="glass-card studio-panel study-panel" id="study-panel-explainer">
+        <h3>Topic Explainer</h3>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:14px;">
+          <div class="form-group">
+            <label for="studyExpSubject" class="form-label">Subject</label>
+            <input type="text" id="studyExpSubject" class="input-field" placeholder="e.g., Physics, Computer Science, History" />
+          </div>
+          <div class="form-group">
+            <label for="studyExpLevel" class="form-label">Explanation Level</label>
+            <select id="studyExpLevel" class="select-field">
+              <option value="beginner-friendly with simple analogies">Beginner / Simple</option>
+              <option value="high school / undergraduate intermediate">Intermediate</option>
+              <option value="deep technical and rigorous">Advanced / Detailed</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="studyExpTopic" class="form-label">Topic or Concept</label>
+          <input type="text" id="studyExpTopic" class="input-field" placeholder="e.g., How neural networks learn via backpropagation" />
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button type="button" class="btn btn-primary" id="runStudyExplainerBtn">Explain Topic</button>
+          <button type="button" class="btn btn-secondary" id="saveStudyExplainerBtn" style="display:none;">Save to Workspace</button>
+        </div>
+        <div id="studyExplainerOutput" class="output-box" style="display:none; margin-top:16px;"></div>
+      </div>
+
+      <!-- TAB 2: REVISION NOTES -->
+      <div class="glass-card studio-panel study-panel" id="study-panel-notes" style="display:none;">
+        <h3>Revision Notes Generator</h3>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:14px;">
+          <div class="form-group">
+            <label for="studyNotesSubject" class="form-label">Subject</label>
+            <input type="text" id="studyNotesSubject" class="input-field" placeholder="e.g., Biology" />
+          </div>
+          <div class="form-group">
+            <label for="studyNotesTopic" class="form-label">Topic</label>
+            <input type="text" id="studyNotesTopic" class="input-field" placeholder="e.g., Cellular Respiration & ATP" />
+          </div>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button type="button" class="btn btn-primary" id="runStudyNotesBtn">Generate Revision Notes</button>
+          <button type="button" class="btn btn-secondary" id="copyStudyNotesBtn" style="display:none;">Copy Notes</button>
+          <button type="button" class="btn btn-secondary" id="saveStudyNotesBtn" style="display:none;">Save Notes</button>
+        </div>
+        <div id="studyNotesOutput" class="output-box" style="display:none; margin-top:16px;"></div>
+      </div>
+
+      <!-- TAB 3: QUIZ CREATOR -->
+      <div class="glass-card studio-panel study-panel" id="study-panel-quiz" style="display:none;">
+        <h3>Interactive Quiz Creator</h3>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:14px;">
+          <div class="form-group">
+            <label for="quizTopicInput" class="form-label">Quiz Topic</label>
+            <input type="text" id="quizTopicInput" class="input-field" placeholder="e.g., World War II, JavaScript Promises" />
+          </div>
+          <div class="form-group">
+            <label for="quizCountSelect" class="form-label">Question Count</label>
+            <select id="quizCountSelect" class="select-field">
+              <option value="3">3 Questions</option>
+              <option value="5" selected>5 Questions</option>
+              <option value="8">8 Questions</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="quizDiffSelect" class="form-label">Difficulty</label>
+            <select id="quizDiffSelect" class="select-field">
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate" selected>Intermediate</option>
+              <option value="Advanced">Advanced</option>
+            </select>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" id="generateQuizBtn">Generate Quiz</button>
+        <div id="quizContainer" style="margin-top:20px;"></div>
+      </div>
+
+      <!-- TAB 4: FLASHCARDS -->
+      <div class="glass-card studio-panel study-panel" id="study-panel-flashcards" style="display:none;">
+        <h3>AI Flashcards</h3>
+        <div style="display:flex; flex-wrap:wrap; gap:12px;">
+          <input type="text" id="flashcardTopicInput" class="input-field" style="flex:1; min-width:240px;" placeholder="Enter a topic to generate flashcards..." />
+          <button type="button" class="btn btn-primary" id="generateFlashcardsBtn">Create Deck</button>
+        </div>
+        <div id="flashcardsContainer" style="margin-top:20px;"></div>
+      </div>
+
+      <!-- TAB 5: STUDY PLANNER -->
+      <div class="glass-card studio-panel study-panel" id="study-panel-planner" style="display:none;">
+        <h3>Study Planner</h3>
+        <form id="studyTaskForm" style="display:grid; grid-template-columns: 1fr 1.6fr 160px auto; gap:12px; align-items:end;">
+          <div class="form-group" style="margin:0;">
+            <label for="taskSubjectInput" class="form-label">Subject</label>
+            <input type="text" id="taskSubjectInput" class="input-field" placeholder="Mathematics" required />
+          </div>
+          <div class="form-group" style="margin:0;">
+            <label for="taskDescInput" class="form-label">Study Task</label>
+            <input type="text" id="taskDescInput" class="input-field" placeholder="Complete calculus practice set" required />
+          </div>
+          <div class="form-group" style="margin:0;">
+            <label for="taskDateInput" class="form-label">Target Date</label>
+            <input type="date" id="taskDateInput" class="input-field" />
+          </div>
+          <button type="submit" class="btn btn-primary">Add Task</button>
+        </form>
+        <div id="studyTasksList" style="margin-top:20px; display:flex; flex-direction:column; gap:10px;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       VIEW 6: MY WORKSPACE
+       ====================================================================== -->
+  <section id="view-workspace" class="app-view">
+    <div class="container page-shell">
+      <div class="section-header" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:end; gap:16px;">
+        <div>
+          <span class="section-eyebrow">Personal Library</span>
+          <h1 class="section-title">My Workspace</h1>
+          <p class="section-desc">Your saved AI conversations, tool outputs, revision notes, and creative artifacts.</p>
+        </div>
+        <button type="button" class="btn btn-primary" id="newNoteBtn">+ New Quick Note</button>
+      </div>
+
+      <div id="workspaceStorageNotice"></div>
+
+      <div class="tools-controls">
+        <div class="search-input-wrap">
+          <input type="search" id="workspaceSearchInput" class="input-field" placeholder="Search saved items..." aria-label="Search workspace" />
+        </div>
+        <div class="filter-pills" id="workspaceFilterPills">
+          <button type="button" class="filter-pill active" data-ws-filter="all">All</button>
+          <button type="button" class="filter-pill" data-ws-filter="favorites">Favorites</button>
+          <button type="button" class="filter-pill" data-ws-filter="conversation">Conversations</button>
+          <button type="button" class="filter-pill" data-ws-filter="tool_output">Tool Outputs</button>
+          <button type="button" class="filter-pill" data-ws-filter="study_material">Study Notes</button>
+          <button type="button" class="filter-pill" data-ws-filter="note">Notes</button>
+        </div>
+      </div>
+
+      <div class="tools-grid" id="workspaceGrid"></div>
+      <div class="empty-state" id="workspaceEmptyState" style="display:none;">
+        <h3>Your workspace is empty</h3>
+        <p>Save outputs from AI Chat, Discover Tools, or the Study Room to build your personal knowledge vault.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       VIEW 7: PROFILE & AUTHENTICATION
+       ====================================================================== -->
+  <section id="view-profile" class="app-view">
+    <div class="container page-shell" style="max-width:760px;">
+      <div class="section-header">
+        <span class="section-eyebrow">Account</span>
+        <h1 class="section-title">NOVA Identity &amp; Profile</h1>
+      </div>
+      <div id="profileContent"></div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       VIEW 8: SETTINGS
+       ====================================================================== -->
+  <section id="view-settings" class="app-view">
+    <div class="container page-shell" style="max-width:800px;">
+      <div class="section-header">
+        <span class="section-eyebrow">Preferences</span>
+        <h1 class="section-title">Settings</h1>
+        <p class="section-desc">Customize your NOVA AI interface, chat behavior, and privacy preferences.</p>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div class="glass-card studio-panel">
+          <h3>Appearance</h3>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong>Color Theme</strong>
+              <p style="font-size:0.88rem; color:var(--text-secondary);">Switch between Cosmic Dark (default) and Daylight mode.</p>
+            </div>
+            <select id="settingThemeSelect" class="select-field" style="width:160px;">
+              <option value="dark">Cosmic Dark</option>
+              <option value="light">Daylight</option>
+            </select>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong>Reduced Motion</strong>
+              <p style="font-size:0.88rem; color:var(--text-secondary);">Minimize orbital animations and UI transitions.</p>
+            </div>
+            <input type="checkbox" id="settingReducedMotion" />
+          </div>
+        </div>
+
+        <div class="glass-card studio-panel">
+          <h3>Chat Preferences</h3>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong>Enter to Send</strong>
+              <p style="font-size:0.88rem; color:var(--text-secondary);">Press Enter to submit messages (Shift+Enter for new line).</p>
+            </div>
+            <input type="checkbox" id="settingEnterToSend" checked />
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong>Clear Local Chat History</strong>
+              <p style="font-size:0.88rem; color:var(--text-secondary);">Remove locally cached conversations from this browser.</p>
+            </div>
+            <button type="button" class="btn btn-danger btn-sm" id="settingClearHistoryBtn">Clear History</button>
+          </div>
+        </div>
+
+        <div class="glass-card studio-panel">
+          <h3>Privacy &amp; Data Transparency</h3>
+          <p style="font-size:0.9rem; color:var(--text-secondary);">
+            Prompts submitted to NOVA AI are securely routed through our backend server to configured AI providers (such as Google Gemini) solely to generate your responses. When signed in with Supabase, your conversations and workspace items are protected by PostgreSQL Row Level Security so only your authenticated account can access them.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REUSABLE MODAL (Tools, Auth, Info, Confirmations) -->
+  <div class="modal-backdrop" id="globalModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-dialog">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; gap:12px;">
+        <h2 id="modalTitle" style="font-size:1.35rem;">Modal</h2>
+        <button type="button" class="btn btn-ghost btn-sm" id="closeModalBtn" aria-label="Close modal">✕</button>
+      </div>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Supabase JS CDN (Loaded gracefully if cloud auth is configured) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/orb.js"></script>
+  <script src="/js/navigation.js"></script>
+  <script src="/js/router.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/chat.js"></script>
+  <script src="/js/tools.js"></script>
+  <script src="/js/image-studio.js"></script>
+  <script src="/js/study-room.js"></script>
+  <script src="/js/workspace.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

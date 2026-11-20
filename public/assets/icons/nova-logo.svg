@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <radialGradient id="novaCore" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#54DFFF"/>
+      <stop offset="55%" stop-color="#A78BFA"/>
+      <stop offset="100%" stop-color="#10162A" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#54DFFF"/>
+      <stop offset="100%" stop-color="#A78BFA"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="24" fill="url(#novaCore)" opacity="0.45"/>
+  <ellipse cx="32" cy="32" rx="26" ry="10" transform="rotate(-28 32 32)" stroke="url(#ringGrad)" stroke-width="2.2"/>
+  <ellipse cx="32" cy="32" rx="26" ry="10" transform="rotate(28 32 32)" stroke="url(#ringGrad)" stroke-width="1.6" opacity="0.75"/>
+  <circle cx="32" cy="32" r="9" fill="url(#ringGrad)"/>
+  <circle cx="32" cy="32" r="4.5" fill="#F5F5FF"/>
+</svg>

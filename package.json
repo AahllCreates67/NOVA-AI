@@ -1,0 +1,26 @@
+{
+  "name": "nova-ai",
+  "version": "1.0.0",
+  "description": "NOVA AI — Intelligence Beyond Imagination. Full-stack AI platform.",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js"
+  },
+  "keywords": ["ai", "gemini", "supabase", "nova-ai", "express"],
+  "author": "Aahil Shams",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "@supabase/supabase-js": "^2.45.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "express-rate-limit": "^7.4.0",
+    "helmet": "^8.0.0",
+    "morgan": "^1.10.0"
+  }
+}

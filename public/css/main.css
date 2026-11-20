@@ -1,0 +1,161 @@
+/* ==========================================================================
+   NOVA AI — GLOBAL DESIGN TOKENS & BASE STYLES
+   Brand: NOVA AI | Intelligence Beyond Imagination
+   ========================================================================== */
+
+:root {
+  /* Core Palette */
+  --bg-primary: #080B16;
+  --bg-secondary: #10162A;
+  --bg-elevated: rgba(16, 22, 42, 0.72);
+  --bg-glass: rgba(16, 22, 42, 0.56);
+  --bg-glass-hover: rgba(24, 33, 62, 0.72);
+
+  /* Accents */
+  --accent-violet: #A78BFA;
+  --accent-violet-deep: #7C3AED;
+  --accent-cyan: #54DFFF;
+  --accent-cyan-deep: #0EA5E9;
+
+  /* Typography */
+  --text-primary: #F5F5FF;
+  --text-secondary: #A1A9C2;
+  --text-muted: #6E7796;
+
+  /* Borders & Shadows */
+  --border-subtle: rgba(245, 245, 255, 0.09);
+  --border-strong: rgba(245, 245, 255, 0.18);
+  --border-glow: rgba(84, 223, 255, 0.35);
+  --shadow-card: 0 20px 50px rgba(3, 6, 18, 0.55);
+  --shadow-glow: 0 0 40px rgba(167, 139, 250, 0.18), 0 0 80px rgba(84, 223, 255, 0.1);
+
+  /* Status Colors */
+  --status-success: #34D399;
+  --status-warning: #FBBF24;
+  --status-error: #F87171;
+
+  /* Layout & Radii */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-xl: 28px;
+  --nav-height: 74px;
+  --container-max: 1240px;
+
+  /* Fonts */
+  --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Transitions */
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Optional Light Theme Support (Settings Toggle) */
+[data-theme="light"] {
+  --bg-primary: #F3F5FC;
+  --bg-secondary: #FFFFFF;
+  --bg-elevated: rgba(255, 255, 255, 0.88);
+  --bg-glass: rgba(255, 255, 255, 0.78);
+  --bg-glass-hover: rgba(245, 247, 255, 0.95);
+  --text-primary: #0F152B;
+  --text-secondary: #475274;
+  --text-muted: #6C7799;
+  --border-subtle: rgba(15, 21, 43, 0.1);
+  --border-strong: rgba(15, 21, 43, 0.2);
+  --shadow-card: 0 16px 40px rgba(15, 21, 43, 0.08);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 2px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--text-primary) 15%, var(--accent-cyan) 55%, var(--accent-violet) 95%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(161, 169, 194, 0.25);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(167, 139, 250, 0.45);
+}
